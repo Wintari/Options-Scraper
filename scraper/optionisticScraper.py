@@ -846,10 +846,10 @@ def validateProxy(proxy):
     print('Validating proxy: ' + proxy)
     try:
         headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36'}
-        response = requests.get('https://www.optionistics.com/', headers = headers, proxies={'http' : proxy, 'https' : proxy}, timeout=5)
+        response = requests.get('https://www.optionistics.com/', headers = headers, proxies={'http' : 'http://' + proxy, 'https' : 'http://' + proxy}, timeout=5)
         tree = html.document_fromstring(response.content)
     except:
-        print(proxy + ' - bad proxy')
+        print(proxy + ' - bad proxy ')
         return None
     else:
         siteName = tree.find('''.//body/div/table/tr[1]/td/table/tr/td[1]/table/tr[1]/td[1]/a/img''')
@@ -906,7 +906,7 @@ def getPage(root):
                     'v': '1',
                     'parm': ''}
 
-                response = requests.post('''https://www.optionistics.com/f/option_chains''', requestData, headers=headers, proxies={'http' : proxy, 'https' : proxy}, timeout = timeout)
+                response = requests.post('''https://www.optionistics.com/f/option_chains''', requestData, headers=headers, proxies={'http' : 'http://' + proxy, 'https' : 'http://' + proxy}, timeout = timeout)
 
                 tree = html.document_fromstring(response.content)
         except requests.exceptions.Timeout:
